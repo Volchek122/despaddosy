@@ -1,0 +1,23 @@
+name: CI
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+      - name: Install deps
+        run: go mod download
+      - name: Test
+        run: go test ./...
+      - name: Build
+        run: |
+          go build ./cmd/gateway
+          go build ./cmd/riskd
+          go build ./cmd/sociald
+          go build ./cmd/migrate

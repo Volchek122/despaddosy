@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Profile</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50">
+  <header class="bg-white shadow">
+    <div class="max-w-4xl mx-auto px-6 py-4 flex justify-between">
+      <a href="/" class="font-semibold">Despaddosy</a>
+      <div>
+        <a href="/admin" class="text-sm text-slate-500">Admin</a>
+      </div>
+    </div>
+  </header>
+  <main class="max-w-4xl mx-auto px-6 py-6 space-y-6">
+    <section class="bg-white p-5 rounded-xl shadow">
+      <div class="flex items-center space-x-4">
+        <img class="h-16 w-16 rounded-full" src="{{if .Profile.Avatar}}{{.Profile.Avatar}}{{else}}https://placekitten.com/120/120{{end}}" alt="avatar" />
+        <div>
+          <h1 class="text-xl font-semibold">@{{.Profile.Username}}</h1>
+          <p class="text-sm text-slate-500">{{.Profile.Bio}}</p>
+        </div>
+      </div>
+    </section>
+    <section class="space-y-4">
+      {{range .Posts}}
+      <article class="bg-white p-5 rounded-xl shadow">
+        <p class="text-slate-700">{{.Content}}</p>
+      </article>
+      {{end}}
+    </section>
+  </main>
+</body>
+</html>
