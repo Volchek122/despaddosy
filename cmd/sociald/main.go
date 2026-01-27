@@ -4,7 +4,6 @@ import (
 	"context"
 	"crypto/tls"
 	"crypto/x509"
-	"embed"
 	"encoding/json"
 	"errors"
 	"html/template"
@@ -26,12 +25,6 @@ import (
 	"github.com/rs/zerolog/log"
 	"golang.org/x/crypto/bcrypt"
 )
-
-//go:embed ../../web/templates/*.html
-var templateFS embed.FS
-
-//go:embed ../../web/static/*
-var staticFS embed.FS
 
 type server struct {
 	cfg       config.SocialConfig
@@ -109,7 +102,7 @@ func main() {
 	}
 	redisClient := store.NewRedis(cfg.Redis.Addr)
 
-	tmpl, err := template.ParseFS(templateFS, "../../web/templates/*.html")
+	tmpl, err := template.ParseFS(os.DirFS("web/templates"), "*.html")
 	if err != nil {
 		log.Fatal().Err(err).Msg("failed to parse templates")
 	}
@@ -117,7 +110,7 @@ func main() {
 	srv := &server{cfg: cfg, db: db, redis: redisClient, templates: tmpl}
 
 	mux := http.NewServeMux()
-	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.FS(staticFS))))
+	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("web/static"))))
 	mux.HandleFunc("/healthz", func(w http.ResponseWriter, _ *http.Request) {
 		w.WriteHeader(http.StatusOK)
 		_, _ = w.Write([]byte("ok"))
