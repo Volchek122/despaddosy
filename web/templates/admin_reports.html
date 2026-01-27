@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Reports</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50">
+  <main class="max-w-5xl mx-auto px-6 py-8">
+    <h1 class="text-xl font-semibold mb-4">Reports</h1>
+    <table class="w-full bg-white rounded-xl shadow">
+      <thead class="text-left text-sm text-slate-500">
+        <tr>
+          <th class="p-3">ID</th>
+          <th class="p-3">Post</th>
+          <th class="p-3">Reason</th>
+          <th class="p-3">Status</th>
+          <th class="p-3">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{range .Reports}}
+        <tr class="border-t">
+          <td class="p-3">{{.ID}}</td>
+          <td class="p-3">{{.PostID}}</td>
+          <td class="p-3">{{.Reason}}</td>
+          <td class="p-3">{{.Status}}</td>
+          <td class="p-3">
+            <form method="POST" class="space-x-2">
+              <input type="hidden" name="csrf_token" value="{{$.CSRF}}" />
+              <input type="hidden" name="report_id" value="{{.ID}}" />
+              <input name="note" class="border rounded p-1" placeholder="Note" />
+              <button name="action" value="close" class="text-sm text-indigo-600">Close</button>
+            </form>
+          </td>
+        </tr>
+        {{end}}
+      </tbody>
+    </table>
+  </main>
+</body>
+</html>

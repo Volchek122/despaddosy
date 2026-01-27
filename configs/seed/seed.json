@@ -1,0 +1,12 @@
+{
+  "admin": {
+    "email": "admin@example.com",
+    "username": "admin",
+    "password": "admin1234",
+    "role": "admin"
+  },
+  "posts": [
+    {"content": "Welcome to Despaddosy! This is a safe demo social feed.", "image_url": ""},
+    {"content": "Gateway risk scoring monitors write-heavy actions.", "image_url": ""}
+  ]
+}
