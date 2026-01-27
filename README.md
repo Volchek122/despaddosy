@@ -34,8 +34,12 @@ Admin login:
 
 ## Development (Linux/macOS)
 ```bash
-make build
-make test
+go build ./cmd/gateway
+go build ./cmd/riskd
+go build ./cmd/sociald
+go build ./cmd/migrate
+
+go test ./...
 ```
 
 ## Development (Windows)
