@@ -1,0 +1,11 @@
+service_name: riskd
+address: ":8082"
+redis:
+  addr: "redis:6379"
+thresholds:
+  block: 80
+  challenge: 60
+  monitor: 30
+observability:
+  otel_endpoint: "otel-collector:4317"
+  metrics_address: ":9092"
