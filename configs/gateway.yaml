@@ -1,0 +1,84 @@
+service_name: gateway
+listener:
+  address: ":8080"
+  tls:
+    enabled: false
+    cert_file: "configs/certs/gateway.crt"
+    key_file: "configs/certs/gateway.key"
+  timeouts:
+    read_header_seconds: 5
+    read_seconds: 10
+    write_seconds: 10
+redis:
+  addr: "redis:6379"
+riskd:
+  endpoint: "http://riskd:8082"
+  timeout_ms: 120
+  salt: "dev-salt"
+jwt:
+  secret: "dev-secret"
+blocked_response:
+  message: "suspicious activity detected"
+  retry_after_seconds: 120
+tls_upstream:
+  enabled: true
+  ca_file: "configs/certs/ca.crt"
+  cert_file: "configs/certs/gateway.crt"
+  key_file: "configs/certs/gateway.key"
+observability:
+  otel_endpoint: "otel-collector:4317"
+  metrics_address: ":9091"
+routes:
+  - id: "public"
+    host: ""
+    path_prefix: "/"
+    upstream_url: "https://sociald:8081"
+    allowed_methods: ["GET", "POST", "DELETE"]
+    auth_required: false
+    max_body_bytes: 65536
+    allowed_content_types: ["application/x-www-form-urlencoded", "application/json"]
+    rate_limits:
+      per_ip: { rps: 10, burst: 20 }
+      per_user: { rps: 10, burst: 20 }
+      per_route: { rps: 20, burst: 40 }
+    risk:
+      enabled: true
+      thresholds: { block: 80, challenge: 60, monitor: 30 }
+      action_map: { block: "block", challenge: "challenge", monitor: "monitor" }
+      auth_hint: false
+      max_body_hint: 65536
+  - id: "admin"
+    path_prefix: "/admin"
+    upstream_url: "https://sociald:8081"
+    allowed_methods: ["GET", "POST"]
+    auth_required: true
+    roles_allowed: ["admin"]
+    max_body_bytes: 65536
+    allowed_content_types: ["application/x-www-form-urlencoded"]
+    rate_limits:
+      per_ip: { rps: 3, burst: 6 }
+      per_user: { rps: 3, burst: 6 }
+      per_route: { rps: 5, burst: 10 }
+    risk:
+      enabled: true
+      thresholds: { block: 80, challenge: 60, monitor: 30 }
+      action_map: { block: "block", challenge: "challenge", monitor: "monitor" }
+      auth_hint: true
+      max_body_hint: 32768
+  - id: "api"
+    path_prefix: "/api"
+    upstream_url: "https://sociald:8081"
+    allowed_methods: ["GET", "POST", "DELETE"]
+    auth_required: true
+    max_body_bytes: 65536
+    allowed_content_types: ["application/json", "application/x-www-form-urlencoded"]
+    rate_limits:
+      per_ip: { rps: 5, burst: 10 }
+      per_user: { rps: 5, burst: 10 }
+      per_route: { rps: 8, burst: 16 }
+    risk:
+      enabled: true
+      thresholds: { block: 80, challenge: 60, monitor: 30 }
+      action_map: { block: "block", challenge: "challenge", monitor: "monitor" }
+      auth_hint: true
+      max_body_hint: 65536

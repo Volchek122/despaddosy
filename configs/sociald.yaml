@@ -1,0 +1,18 @@
+service_name: sociald
+address: ":8081"
+tls:
+  enabled: true
+  cert_file: "configs/certs/sociald.crt"
+  key_file: "configs/certs/sociald.key"
+  ca_file: "configs/certs/ca.crt"
+database:
+  dsn: "postgres://postgres:postgres@postgres:5432/social?sslmode=disable"
+redis:
+  addr: "redis:6379"
+jwt:
+  secret: "dev-secret"
+csrf:
+  secret: "dev-csrf"
+observability:
+  otel_endpoint: "otel-collector:4317"
+  metrics_address: ":9093"

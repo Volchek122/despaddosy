@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Register</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50">
+  <div class="max-w-md mx-auto mt-16 bg-white p-6 rounded-xl shadow">
+    <h1 class="text-xl font-semibold">Create account</h1>
+    <form method="POST" class="space-y-4 mt-4">
+      <input type="hidden" name="csrf_token" value="{{.CSRF}}" />
+      <input name="email" type="email" class="w-full border rounded-lg p-2" placeholder="Email" />
+      <input name="username" type="text" class="w-full border rounded-lg p-2" placeholder="Username" />
+      <input name="password" type="password" class="w-full border rounded-lg p-2" placeholder="Password" />
+      <button class="w-full bg-indigo-600 text-white py-2 rounded-lg">Register</button>
+    </form>
+  </div>
+</body>
+</html>
