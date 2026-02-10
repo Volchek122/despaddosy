@@ -17,15 +17,23 @@ func NewMatcher(routes []config.RoutePolicy) *Matcher {
 
 func (m *Matcher) Match(r *http.Request) (config.RoutePolicy, bool) {
 	path := r.URL.Path
+	var bestMatch config.RoutePolicy
+	var bestLen int
+	found := false
+
 	for _, route := range m.routes {
 		if route.Host != "" && !strings.EqualFold(route.Host, r.Host) {
 			continue
 		}
 		if strings.HasPrefix(path, route.PathPrefix) {
-			return route, true
+			if len(route.PathPrefix) >= bestLen {
+				bestMatch = route
+				bestLen = len(route.PathPrefix)
+				found = true
+			}
 		}
 	}
-	return config.RoutePolicy{}, false
+	return bestMatch, found
 }
 
 func MethodAllowed(route config.RoutePolicy, method string) bool {

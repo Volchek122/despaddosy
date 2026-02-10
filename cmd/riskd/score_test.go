@@ -17,7 +17,7 @@ func TestScoreDecision(t *testing.T) {
 	cfg.Thresholds.Challenge = 60
 	cfg.Thresholds.Monitor = 30
 	req := scoreRequest{
-		Features:   features.Vector{RequestRateSnapshot: 10, SuspiciousTokenFlag: true, UserAgentLen: 0},
+		Features:   features.Vector{RequestRateSnapshot: 10, SuspiciousTokenFlag: true, UserAgentLen: 0, HighEntropyQueryFlag: true},
 		Thresholds: config.RiskThresholds{Block: 80, Challenge: 60, Monitor: 30},
 	}
 	resp := score(context.Background(), redis.NewClient(&redis.Options{Addr: "localhost:0"}), metrics.NewRiskMetrics(), cfg, req)
