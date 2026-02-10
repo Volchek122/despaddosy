@@ -1,0 +1,142 @@
+QMainWindow {
+    background-color: #141414;
+    color: white;
+}
+
+QWidget {
+    color: white;
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    outline: none;
+}
+
+/* ScrollArea */
+QScrollArea {
+    background-color: transparent;
+    border: none;
+}
+
+/* Poster Grid (ListWidget) */
+QListWidget {
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+
+QListWidget::item {
+    background-color: transparent;
+    border: 3px solid transparent;
+    border-radius: 6px;
+    padding: 10px;
+    color: #e5e5e5;
+    margin: 5px;
+}
+
+QListWidget::item:hover {
+    background-color: #2a2a2a;
+    border: 3px solid #666;
+}
+
+QListWidget::item:selected {
+    background-color: #2a2a2a;
+    border: 3px solid #e50914; /* Netflix Red Focus Border */
+    color: white;
+}
+
+/* Input Fields */
+QLineEdit {
+    background-color: #333;
+    color: white;
+    border: 1px solid #444;
+    padding: 12px;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+QLineEdit:focus {
+    border: 1px solid #e50914;
+    background-color: #444;
+}
+
+/* Buttons */
+QPushButton {
+    background-color: #e50914;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+QPushButton:hover {
+    background-color: #f40612;
+}
+
+QPushButton:focus {
+    border: 2px solid white; /* Focus ring for remote navigation */
+    background-color: #b2070f;
+}
+
+/* Specific buttons */
+QPushButton#back_btn {
+    background-color: transparent;
+    border: 1px solid #888;
+}
+QPushButton#back_btn:focus {
+    border: 2px solid white;
+    background-color: #333;
+}
+
+/* Labels */
+QLabel {
+    color: #e5e5e5;
+}
+
+/* ComboBox */
+QComboBox {
+    background-color: #333;
+    border: 1px solid #444;
+    border-radius: 4px;
+    padding: 8px;
+    min-width: 150px;
+}
+QComboBox:focus {
+    border: 1px solid #e50914;
+}
+QComboBox::drop-down {
+    border: none;
+}
+QComboBox QAbstractItemView {
+    background-color: #333;
+    selection-background-color: #e50914;
+    color: white;
+}
+
+/* Episode List */
+QListWidget#episode_list {
+    background-color: transparent;
+}
+QListWidget#episode_list::item {
+    border-bottom: 1px solid #333;
+    padding: 15px;
+}
+QListWidget#episode_list::item:selected {
+    border: 2px solid #e50914;
+    background-color: #222;
+}
+
+/* Scrollbar */
+QScrollBar:vertical {
+    border: none;
+    background: #141414;
+    width: 12px;
+    margin: 0px;
+}
+QScrollBar::handle:vertical {
+    background: #444;
+    min-height: 20px;
+    border-radius: 6px;
+}
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+    height: 0px;
+}
